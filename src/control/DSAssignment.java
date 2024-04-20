@@ -24,12 +24,16 @@ public class DSAssignment {
     CircularListInterface<String> tutorlist = new CLinkedList<>();
     CircularListInterface<String> courselist = new CLinkedList<>();
 
-
+    //Course
     CircularListInterface<String> programlist = new CLinkedList<>();
     CircularListInterface<Course> courseProgramlist = init.courseProgramListInit();
 
 
-   //Course
+   //Student
+   CircularListInterface<Student> studentDetailList = init.studentDetailListInit();
+    CircularListInterface<String> programmelist = init.programListInit();
+    CircularListInterface<String> studentClasslist = init.studentClassInitString();
+    CircularListInterface<String> emaillist = init.emailInitString();
 
     public static void main(String[] args) {
         DSAssignment run = new DSAssignment();
@@ -45,7 +49,8 @@ public class DSAssignment {
             // Process the user's choice 
             switch (choice) {
                 case 1:
-                    System.out.println("Student Registration selected.");
+                    StudentRegistration std = new StudentRegistration(studentDetailList,studentlist,courselist,programmelist,studentClasslist,emaillist,courseProgramlist);
+                    studentDetailList = std.runStudentRegistration();
                     break;
                 case 2:
                     TutorialManagement tut = new TutorialManagement(tutorialGrpList, studentlist, tutorlist, courselist);
@@ -94,21 +99,21 @@ public class DSAssignment {
         System.out.println("\n");
 
 
-        //contains method
-        System.out.println("Does List 1 contains student id 3?");
-        System.out.println("=================");
-        Boolean test = studentList.contains(new Student(3, "Ross","Bos", "G2S", "FOCS", "Ross@tarc.edu.my" ));
-        System.out.println(test);
-        System.out.println("\n");
-
-        //remove method
-        System.out.println("Does List 1 contains student id 3? after removing it");
-        System.out.println("=================");
-        studentList.remove(new Student(3, "Charlie","RSD", "G1", "FOCS", "Alice@tarc.edu.my" ));
-        Boolean test1 = studentList.contains(new Student(3, "Charlie","RSD", "G1", "FOCS", "Alice@tarc.edu.my" ));
-        studentList.display();
-        System.out.println(test1);
-        System.out.println("\n");
+//        //contains method
+//        System.out.println("Does List 1 contains student id 3?");
+//        System.out.println("=================");
+//        Boolean test = studentList.contains(new Student( "Ross","Bos", "G2S", "FOCS", "Ross@tarc.edu.my" ));
+//        System.out.println(test);
+//        System.out.println("\n");
+//
+//        //remove method
+//        System.out.println("Does List 1 contains student id 3? after removing it");
+//        System.out.println("=================");
+//        studentList.remove(new Student( "Charlie","RSD", "G1", "FOCS", "Alice@tarc.edu.my" ));
+//        Boolean test1 = studentList.contains(new Student( "Charlie","RSD", "G1", "FOCS", "Alice@tarc.edu.my" ));
+//        studentList.display();
+//        System.out.println(test1);
+//        System.out.println("\n");
 
 
         //toJson method

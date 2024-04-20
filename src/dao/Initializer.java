@@ -11,23 +11,24 @@ public class Initializer {
 
     public CircularListInterface<Student> studentInitialize1(){
         CircularListInterface<Student> studentlist = new CLinkedList<>();
-        studentlist.add(new Student(1, "Alice", "RSD", "G1", "FOCS", "Alice@tarc.edu.my" ));
-        studentlist.add(new Student(2, "Bob", "RSD", "G1", "FOCS", "Bob@tarc.edu.my" ));
-        studentlist.add(new Student(3, "Charlie","RSD", "G1", "FOCS", "Charlie@tarc.edu.my" ));
-        studentlist.add(new Student(3, "Carl","RSD", "G1", "FOCS", "Carl@tarc.edu.my" ));
-        studentlist.add(new Student(4, "Molly","RSD", "G1", "FOCS", "Molly@tarc.edu.my" ));
+        studentlist.add(new Student("Alice", "RSD", "G1", "FOCS","Semester1", "Alice@tarc.edu.my" ));
+        studentlist.add(new Student("Bob", "RSD", "G1", "FOCS","Semester1", "Bob@tarc.edu.my" ));
+        studentlist.add(new Student("Charlie","RSD", "G1", "FOCS","Semester1", "Charlie@tarc.edu.my" ));
+        studentlist.add(new Student("Charlie","RSW", "G1", "FOCS","Semester1", "Charlie@tarc.edu.my" ));
+        studentlist.add(new Student("Carl","RSD", "G1", "FOCS","Semester1", "Carl@tarc.edu.my" ));
+        studentlist.add(new Student("Molly","RSD", "G1", "FOCS","Semester1", "Molly@tarc.edu.my" ));
 
         return studentlist;
     }
     public CircularListInterface<Student> studentInitialize2(){
         CircularListInterface<Student> studentlist2 = new CLinkedList<>();
-        studentlist2.add(new Student(5, "Bobby","RSD", "G1", "FOCS", "Bobby@tarc.edu.my" ));
-        studentlist2.add(new Student(6, "Conny","RSD", "G1", "FOCS", "Conny@tarc.edu.my" ));
-        studentlist2.add(new Student(7, "Polly","RSD", "G1", "FOCS", "Polly@tarc.edu.my" ));
-        studentlist2.add(new Student(2, "Ken","RSD", "G1", "FOCS", "Ken@tarc.edu.my" ));
-        studentlist2.add(new Student(3, "Sacy","RSD", "G1", "FOCS", "Sacy@tarc.edu.my" ));
-        studentlist2.add(new Student(8, "Paul","RSD", "G1", "FOCS", "Paul@tarc.edu.my" ));
-        studentlist2.add(new Student(9, "Darren","RSD", "G1", "FOCS", "Darren@tarc.edu.my" ));
+        studentlist2.add(new Student("Bobby","RSD", "G1", "FOCS","Semester1", "Bobby@tarc.edu.my" ));
+        studentlist2.add(new Student("Conny","RSD", "G1", "FOCS","Semester1", "Conny@tarc.edu.my" ));
+        studentlist2.add(new Student("Polly","RSD", "G1", "FOCS","Semester1", "Polly@tarc.edu.my" ));
+        studentlist2.add(new Student("Ken","RSD", "G1", "FOCS","Semester1", "Ken@tarc.edu.my" ));
+        studentlist2.add(new Student("Sacy","RSD", "G1", "FOCS","Semester1", "Sacy@tarc.edu.my" ));
+        studentlist2.add(new Student("Paul","RSD", "G1", "FOCS","Semester1", "Paul@tarc.edu.my" ));
+        studentlist2.add(new Student("Darren","RSD", "G1", "FOCS","Semester1", "Darren@tarc.edu.my" ));
         return studentlist2;
     }
 
@@ -101,6 +102,11 @@ public class Initializer {
         return programList;
     }
 
+    public CircularListInterface<String> selectedStudentListInit(){
+        CircularListInterface<String> selectedStudentList = new CLinkedList<>();
+        return selectedStudentList;
+    }
+
     public CircularListInterface<String> courseSemesterListInit(){
         CircularListInterface<String> courseSemesterList = new CLinkedList<>();
         return courseSemesterList;
@@ -129,7 +135,7 @@ public class Initializer {
         courseProgramList.add(new Course("Course2","Program1", "CourseDetail2","Semester1","Faculty1",200));
         courseProgramList.add(new Course("Course2","Program2", "CourseDetail2","Semester2","Faculty2",200));
         courseProgramList.add(new Course("Course2","Program3", "CourseDetail2","Semester3","Faculty3",200));
-        courseProgramList.add(new Course("Course3","Program1", "CourseDetail3","Semester1","Faculty4",300));
+        courseProgramList.add(new Course("Course3","Program1", "CourseDetail3","Semester1","Faculty4",1000));
         courseProgramList.add(new Course("Course3","Program2", "CourseDetail3","Semester2","Faculty5",300));
         courseProgramList.add(new Course("Course3","Program3", "CourseDetail3","Semester3","Faculty6",300));
         courseProgramList.add(new Course("Course4","Program4", "CourseDetail4","Semester1","Faculty4",400));
@@ -141,6 +147,10 @@ public class Initializer {
         courseProgramList.add(new Course("Course4","Program6", "CourseDetail4","Semester3","Faculty4",400));
         courseProgramList.add(new Course("Course6","Program6", "CourseDetail6","Semester2","Faculty6",600));
         courseProgramList.add(new Course("Course10","Program10", "CourseDetail10","Semester10","Faculty10", 1000));
+        courseProgramList.add(new Course("Course7","Program4", "CourseDetail7","Semester1","Faculty10", 1000));
+        courseProgramList.add(new Course("RSD","G1", "RSDEEZ","Semester1","Faculty2020", 350));
+        courseProgramList.add(new Course("RSW","G1", "RSNUTZ","Semester1","Faculty2020", 210));
+        courseProgramList.add(new Course("RSJ","G1", "RSNUTZ","Semester2","Faculty2020", 999));
 
         return courseProgramList;
     }
@@ -160,6 +170,35 @@ public class Initializer {
         tutorialGrouplist.add(new TutorialGroup("GRP8", "Tutor8", "Course8"));
         return tutorialGrouplist;
     }
+
+
+    //Student
+    public CircularListInterface<String> studentClassInitString(){
+        CircularListInterface<String> studentClassList = new CLinkedList<>();
+        studentClassList.add("FOCS");
+        return studentClassList;
+    }
+
+    public CircularListInterface<String> emailInitString(){
+        CircularListInterface<String> emailList = new CLinkedList<>();
+        emailList.add("wong@gmail.com");
+        return emailList;
+    }
+
+    public CircularListInterface<Student> studentDetailListInit(){
+        CircularListInterface<Student> studentlist = new CLinkedList<>();
+        studentlist.add(new Student( "Alice", "RSD", "G1", "FOCS","Semester1", "Alice@tarc.edu.my" ));
+        studentlist.add(new Student( "Bob", "RSD", "G1", "FOCS","Semester1", "Bob@tarc.edu.my" ));
+        studentlist.add(new Student( "Charlie","RSD", "G1", "FOCS","Semester1", "Charlie@tarc.edu.my" ));
+        studentlist.add(new Student( "Charlie","RSW", "G1", "FOCS","Semester1", "Charlie@tarc.edu.my" ));
+        studentlist.add(new Student( "Charlie","RSJ", "G1", "FOCS","Semester2", "Charlie@tarc.edu.my" ));
+        studentlist.add(new Student( "Carl","RSD", "G1", "FOCS","Semester2", "Carl@tarc.edu.my" ));
+        studentlist.add(new Student( "Molly","RSD", "G1", "FOCS","Semester3", "Molly@tarc.edu.my" ));
+
+        return studentlist;
+    }
+
+
 
 
 }

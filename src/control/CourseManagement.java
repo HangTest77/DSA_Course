@@ -56,6 +56,13 @@ public class CourseManagement {
                 case 9:
                     errorMsg = listCourseOfProgramme();
                     break;
+                case 10:
+                    errorMsg = report1();
+                    break;
+
+                case 11:
+                    errorMsg = report2();
+                    break;
 
                 default:
                     System.out.println("Invalid choice. Please select a valid option.");
@@ -258,7 +265,7 @@ public class CourseManagement {
             //Output the course in courseSemesterList
             System.out.println(" ");
             System.out.println("The list consists of: ");
-            facultyList.sort();
+            courseSemesterList.sort();
             for(String facultyName : courseSemesterList) {
                 System.out.println(facultyName);
 
@@ -490,7 +497,161 @@ public class CourseManagement {
         return " ";
     }
 
+    private String extractProgramName(String courseSemester) {
+        return courseSemester.split(",")[0].split(":")[1].trim();
+    }
 
+    private String extractPriceName(String courseSemester) {
+        String[] sections = courseSemester.split(",");
+
+        for (String section : sections) {
+            if (section.trim().startsWith("Fees:")) {
+                String[] parts = section.split(":");
+
+                if (parts.length > 1) {
+                    return parts[1].trim();
+                }
+            }
+        }
+        return null;
+    }
+
+
+//    Report1
+//    Semester Offer what Program which Offers what Course + Price (Total)
+    public String report1(){
+        //Select Semester
+        System.out.println("Selected Choice: Report1");
+        String semesterName = ui.getSemesterName();
+
+        Course selectedSemester = findSemesterByName(semesterName);
+        if (courseProgramlist.contains(selectedSemester)) {
+            System.out.println(" ");
+            System.out.println(semesterName + " consists of: ");
+
+            for (Course program : courseProgramlist) {
+                if (program.getSemesterName().equals(semesterName)) {
+
+                    if (courseSemesterList.contains(program.getProgramName())) {
+                        courseSemesterList.addSame(
+                                "Program: " + program.getProgramName()
+                                + ", Course: " + program.getCourseName() +
+                                        ", Fees: " + program.getCoursePrice());
+
+                    } else {
+                        courseSemesterList.addSame(
+                                "Program: " + program.getProgramName()
+                             + ", Course: " + program.getCourseName() +
+                                ", Fees: " + program.getCoursePrice());
+
+                    }
+                }
+            }
+
+
+            String previousCourse = null;
+
+            courseSemesterList.sort();
+            System.out.println(" ");
+
+
+            int course1 = 0;
+            int totalPrograms1 = 1;
+
+
+
+            //Output List
+            for (String courseSemester: courseSemesterList){
+                String currentProgramName = extractProgramName(courseSemester);
+
+                if (previousCourse == null || currentProgramName.contains(previousCourse)) {
+                    System.out.println(courseSemester);
+                    course1++;
+
+
+                }else {
+                    System.out.println("------------------------------------------------");
+                    System.out.println(courseSemester);
+                    totalPrograms1++;
+
+                }
+
+                previousCourse = currentProgramName;
+            }
+            System.out.println(" ");
+
+
+            //Output Specifics
+            String previousCourse2 = null;
+            String PName = " ";
+            int course = 0;
+            int price = 0;
+            int totalPrograms = 1;
+
+
+            System.out.println(" ");
+            System.out.println("This Semester (" + semesterName + ") contains: ");
+            //For Pricing
+            for (String courseSemester2: courseSemesterList){
+                String currentProgramName2 = extractProgramName(courseSemester2);
+                String currentPrice2 = extractPriceName(courseSemester2);
+
+                if (previousCourse2 == null || currentProgramName2.contains(previousCourse2)) {
+                    course++;
+
+                    assert currentPrice2 != null;
+                    int priceInt = Integer.parseInt(currentPrice2);
+                    PName = currentProgramName2;
+                    price += priceInt;
+
+
+
+                }else {
+                    System.out.println(" = = = = = = = = = = = = = = =");
+                    System.out.println(totalPrograms + ") Program " + PName
+                            + " - Total Courses: " + course
+                            + " - Total Fees: " + price);
+
+                    previousCourse2 = null;
+                    PName = currentProgramName2;
+                    course = 0;
+                    price = 0;
+                    totalPrograms++;
+                    course++;
+
+                    assert currentPrice2 != null;
+                    int priceInt = Integer.parseInt(currentPrice2);
+                    PName = currentProgramName2;
+                    price += priceInt;
+
+
+                }
+
+                previousCourse2 = currentProgramName2;
+            }
+
+            System.out.println(" = = = = = = = = = = = = = = =");
+            System.out.println(totalPrograms + ") Program " + PName
+                        + " - Total Courses: " + course
+                        + " - Total Fees: " + price);
+            System.out.println(" = = = = = = = = = = = = = = =");
+
+
+            courseSemesterList.clear();
+
+        } else {
+            System.out.println("Semester not found.");
+        }
+
+
+        return " ";
+    }
+
+    //Report 2 Faculty
+    public String report2(){
+
+        return " ";
+    }
 
 
 }

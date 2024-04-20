@@ -44,6 +44,16 @@ public class Course implements Comparable<Course>, DataClass {
         return jsonBuilder.toString();
     }
 
+    public String Name2() {
+        StringBuilder jsonBuilder = new StringBuilder();
+        jsonBuilder.append("{");
+        jsonBuilder.append("\"Program\": \"").append(programName).append("\", ");
+        jsonBuilder.append("\"Course\": \"").append(courseName).append("\", ");
+        jsonBuilder.append("\"Price\": \"").append(coursePrice).append("\", ");
+        jsonBuilder.append("}");
+        return jsonBuilder.toString();
+    }
+
     @Override
     public int compareTo(Course other) {
         int result = this.courseId.compareTo(other.getCourseId());
