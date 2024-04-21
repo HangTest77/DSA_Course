@@ -145,28 +145,28 @@ public class Initializer {
 
     public CircularListInterface<Course> courseProgramListInit(){
         CircularListInterface<Course> courseProgramList = new CLinkedList<>();
-        courseProgramList.add(new Course("Course1","Program1", "CourseDetail1","Semester1","Faculty1",100));
-        courseProgramList.add(new Course("Course1","Program2", "CourseDetail1","Semester1","Faculty2",100));
-        courseProgramList.add(new Course("Course1","Program3", "CourseDetail1","Semester1","Faculty3",100));
-        courseProgramList.add(new Course("Course2","Program1", "CourseDetail2","Semester1","Faculty1",200));
-        courseProgramList.add(new Course("Course2","Program2", "CourseDetail2","Semester2","Faculty2",200));
-        courseProgramList.add(new Course("Course2","Program3", "CourseDetail2","Semester3","Faculty3",200));
-        courseProgramList.add(new Course("Course3","Program1", "CourseDetail3","Semester1","Faculty4",1000));
-        courseProgramList.add(new Course("Course3","Program2", "CourseDetail3","Semester2","Faculty5",300));
-        courseProgramList.add(new Course("Course3","Program3", "CourseDetail3","Semester3","Faculty6",300));
-        courseProgramList.add(new Course("Course4","Program4", "CourseDetail4","Semester1","Faculty4",400));
-        courseProgramList.add(new Course("Course5","Program4", "CourseDetail5","Semester2","Faculty5",500));
-        courseProgramList.add(new Course("Course7","Program4", "CourseDetail6","Semester3","Faculty6",700));
-        courseProgramList.add(new Course("Course4","Program5", "CourseDetail4","Semester2","Faculty1",400));
-        courseProgramList.add(new Course("Course5","Program5", "CourseDetail5","Semester3","Faculty2",500));
-        courseProgramList.add(new Course("Course6","Program5", "CourseDetail6","Semester1","Faculty3",600));
-        courseProgramList.add(new Course("Course4","Program6", "CourseDetail4","Semester3","Faculty4",400));
-        courseProgramList.add(new Course("Course6","Program6", "CourseDetail6","Semester2","Faculty6",600));
-        courseProgramList.add(new Course("Course10","Program10", "CourseDetail10","Semester10","Faculty10", 1000));
-        courseProgramList.add(new Course("Course7","Program4", "CourseDetail7","Semester1","Faculty10", 1000));
-        courseProgramList.add(new Course("RSD","G1", "RSDdetails","Semester1","Faculty2020", 350));
-        courseProgramList.add(new Course("RSW","G1", "RSWdetails","Semester1","Faculty2020", 210));
-        courseProgramList.add(new Course("RSJ","G1", "RSJdetails","Semester2","Faculty2020", 999));
+        courseProgramList.add(new Course("RSW","G1", "RSWdetails","Semester1","Faculty1",100));
+        courseProgramList.add(new Course("RSW","G1", "RSWdetails","Semester1","Faculty2",100));
+        courseProgramList.add(new Course("RSW","G1", "RSWdetails","Semester1","Faculty3",100));
+        courseProgramList.add(new Course("RSF","G1", "RSFdetails","Semester1","Faculty1",200));
+        courseProgramList.add(new Course("RSF","G1", "RSFdetails","Semester2","Faculty2",200));
+        courseProgramList.add(new Course("RSF","G1", "RSFdetails","Semester3","Faculty3",200));
+        courseProgramList.add(new Course("RSG","G3", "RSGdetails","Semester1","Faculty4",1000));
+        courseProgramList.add(new Course("RSG","G2", "RSGdetails","Semester2","Faculty5",300));
+        courseProgramList.add(new Course("RSG","G2", "RSGdetails","Semester3","Faculty6",300));
+        courseProgramList.add(new Course("RSJ","G2", "RSJdetails","Semester1","Faculty4",400));
+        courseProgramList.add(new Course("RSH","G4", "RSHdetails","Semester2","Faculty5",500));
+        courseProgramList.add(new Course("RSK","G5", "RSKdetails","Semester3","Faculty6",700));
+        courseProgramList.add(new Course("RSH","G9", "RSHdetails","Semester2","Faculty1",400));
+        courseProgramList.add(new Course("RSH","G8", "RSHdetails","Semester3","Faculty2",500));
+        courseProgramList.add(new Course("RSH","G7", "RSHdetails","Semester1","Faculty3",600));
+        courseProgramList.add(new Course("RSR","G6", "RSRdetails","Semester3","Faculty4",400));
+        courseProgramList.add(new Course("RSA","G5", "RSAdetails","Semester2","Faculty6",600));
+        courseProgramList.add(new Course("RS10","G10", "RS10","Semester10","Faculty10", 1000));
+        courseProgramList.add(new Course("RSC","G3", "RSCdetails","Semester1","Faculty10", 1000));
+        courseProgramList.add(new Course("RSL","G1", "RSLdetails","Semester1","Faculty2", 350));
+        courseProgramList.add(new Course("RSM","G1", "RSMdetails","Semester1","Faculty2", 210));
+        courseProgramList.add(new Course("RSN","G1", "RSNdetails","Semester2","Faculty2", 999));
 
         return courseProgramList;
     }

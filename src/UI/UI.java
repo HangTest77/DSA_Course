@@ -234,14 +234,42 @@ public class UI {
         Course newCourse = new Course();
         clearScreen();
         String programName;
+        String semesterName;
+        String courseDetail;
+        String faculty;
+        String fee;
+        int fees = 0;
 
         newCourse.setCourseName(courseName);
 
         System.out.println("-------------------------------");
         System.out.println("Enter the name of the New Program to be added into the Course(s):");
-        System.out.println("E.g. of Program: RSW, RSD, RSF ");
+        System.out.println("E.g. of Program: G1, G2 ");
         programName = getString(100);
         newCourse.setProgramName(programName);
+        System.out.println(" ");
+
+        System.out.println("Enter the Semester of the New Program:");
+        System.out.println("E.g. of Semester: Semester1 ");
+        semesterName = getString(100);
+        newCourse.setSemesterName(semesterName);
+        System.out.println(" ");
+
+        System.out.println("Enter the Course's Detail:");
+        courseDetail = getString(100);
+        newCourse.setCourseDetails(courseDetail);
+        System.out.println(" ");
+
+        System.out.println("Enter the Faculty:");
+        faculty = getString(100);
+        newCourse.setFacultyName(faculty);
+        System.out.println(" ");
+
+        System.out.println("Enter the Fees of Course");
+        fee = getString(100);
+        fees = Integer.parseInt(fee);
+        newCourse.setCoursePrice(fees);
+        System.out.println(" ");
 
 
         return newCourse;
@@ -251,9 +279,37 @@ public class UI {
         Course newCourse = new Course();
         clearScreen();
 
+        String semesterName;
+        String courseDetail;
+        String faculty;
+        String fee;
+        int fees = 0;
+
         newCourse.setCourseName(courseName);
         newCourse.setProgramName(programName);
+        System.out.println(" ");
 
+        System.out.println("Enter the Semester of the New Program:");
+        System.out.println("E.g. of Semester: Semester1 ");
+        semesterName = getString(100);
+        newCourse.setSemesterName(semesterName);
+        System.out.println(" ");
+
+        System.out.println("Enter the Course's Detail:");
+        courseDetail = getString(100);
+        newCourse.setCourseDetails(courseDetail);
+        System.out.println(" ");
+
+        System.out.println("Enter the Faculty:");
+        faculty = getString(100);
+        newCourse.setFacultyName(faculty);
+        System.out.println(" ");
+
+        System.out.println("Enter the Fees of Course");
+        fee = getString(100);
+        fees = Integer.parseInt(fee);
+        newCourse.setCoursePrice(fees);
+        System.out.println(" ");
 
         return newCourse;
     }
@@ -264,6 +320,36 @@ public class UI {
 
         newCourse.setCourseName(courseName);
         newCourse.setProgramName(programName);
+
+        String semesterName;
+        String courseDetail;
+        String faculty;
+        String fee;
+        int fees = 0;
+
+        System.out.println(" ");
+
+        System.out.println("Enter the Semester of the New Program:");
+        System.out.println("E.g. of Semester: Semester1 ");
+        semesterName = getString(100);
+        newCourse.setSemesterName(semesterName);
+        System.out.println(" ");
+
+        System.out.println("Enter the Course's Detail:");
+        courseDetail = getString(100);
+        newCourse.setCourseDetails(courseDetail);
+        System.out.println(" ");
+
+        System.out.println("Enter the Faculty:");
+        faculty = getString(100);
+        newCourse.setFacultyName(faculty);
+        System.out.println(" ");
+
+        System.out.println("Enter the Fees of Course");
+        fee = getString(100);
+        fees = Integer.parseInt(fee);
+        newCourse.setCoursePrice(fees);
+        System.out.println(" ");
 
 
         return newCourse;
@@ -278,9 +364,40 @@ public class UI {
 
         System.out.println("-------------------------------");
         System.out.println("Enter the name of the New Course to be added into the Program(s):");
-        System.out.println("E.g. of Course: OOP, DSA, C++ ");
+        System.out.println("E.g. of Course: RSW, RSJ, RSD");
         courseName = getString(100);
         newProgram.setCourseName(courseName);
+
+        String semesterName;
+        String courseDetail;
+        String faculty;
+        String fee;
+        int fees = 0;
+
+        System.out.println(" ");
+
+        System.out.println("Enter the Semester of the New Program:");
+        System.out.println("E.g. of Semester: Semester1 ");
+        semesterName = getString(100);
+        newProgram.setSemesterName(semesterName);
+        System.out.println(" ");
+
+        System.out.println("Enter the Course's Detail:");
+        courseDetail = getString(100);
+        newProgram.setCourseDetails(courseDetail);
+        System.out.println(" ");
+
+        System.out.println("Enter the Faculty:");
+        faculty = getString(100);
+        newProgram.setFacultyName(faculty);
+        System.out.println(" ");
+
+        System.out.println("Enter the Fees of Course");
+        fee = getString(100);
+        fees = Integer.parseInt(fee);
+        newProgram.setCoursePrice(fees);
+        System.out.println(" ");
+
 
         return newProgram;
     }
@@ -290,29 +407,62 @@ public class UI {
         Course newCourse = new Course();
         clearScreen();
         String programName;
+        String semesterName;
+        String faculty;
 
         newCourse.setCourseName(courseName);
 
-        System.out.println("-------------------------------");
+        System.out.println(" ");
         System.out.println("Enter the name of the Program to be removed from the Course:");
+        System.out.println("E.g. of Program: G1, G2 ");
         programName = getString(20);
         newCourse.setProgramName(programName);
 
+        System.out.println(" ");
+        System.out.println("Enter the Semester of the New Program:");
+        System.out.println("E.g. of Semester: Semester1 ");
+        semesterName = getString(100);
+        newCourse.setSemesterName(semesterName);
+
+        System.out.println(" ");
+        System.out.println("Enter the Faculty:");
+        System.out.println("E.g. of Faculty: Faculty1");
+        faculty = getString(100);
+        newCourse.setFacultyName(faculty);
+
+        System.out.println(" ");
         return newCourse;
     }
+
 
     public Course removeCourseFromProgram(String programName) {
         Course newCourse = new Course();
         clearScreen();
         String courseName;
+        String semesterName;
+        String faculty;
 
         newCourse.setProgramName(programName);
 
-        System.out.println("-------------------------------");
+        System.out.println(" ");
         System.out.println("Enter the name of the Course to be removed from the Program:");
+        System.out.println("E.g. of Course: RSW, RSF ");
         courseName = getString(20);
         newCourse.setCourseName(courseName);
 
+        System.out.println(" ");
+        System.out.println("Enter the Semester of the New Program:");
+        System.out.println("E.g. of Semester: Semester1 ");
+        semesterName = getString(100);
+        newCourse.setSemesterName(semesterName);
+
+        System.out.println(" ");
+        System.out.println("Enter the Faculty:");
+        System.out.println("E.g. of Faculty: Faculty1");
+        faculty = getString(100);
+        newCourse.setFacultyName(faculty);
+
+        System.out.println(" ");
         return newCourse;
     }
 
@@ -328,7 +478,7 @@ public class UI {
     public String getCourseName() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please input the name of the Courses");
-        System.out.println("E.g. of Course: Course1, Course2 ");
+        System.out.println("E.g. of Course: RSW, RSF ");
         return scanner.nextLine();
     }
 
@@ -345,7 +495,7 @@ public class UI {
     public String getProgramName() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the name of the program: ");
-        System.out.println("E.g. of Program: RSW, RSD, RSF ");
+        System.out.println("\nE.g. of Program: G1, G2, G3 ");
         return scanner.nextLine();
     }
 
@@ -386,49 +536,6 @@ public class UI {
 
 
     }
-
-    //student registration
-//    public Student inputStudent(CircularListInterface<String> name, CircularListInterface<String> course, CircularListInterface<String> programme,
-//    CircularListInterface<String> studentClass, CircularListInterface<String> email){
-//
-//        clearScreen();
-//        Student newStd = new Student();
-//        int id = generateAutoId();
-//        newStd.setId(id);
-//        String stdName;
-//        String courseName;
-//        String programmeName;
-//        String stdClass;
-//        String eml;
-//
-//        System.out.println("Student Registration");
-//        System.out.println("-------------------------------");
-//
-//        System.out.println("Enter Student Name");
-//        stdName = getString(20);
-//        newStd.setName(stdName);
-//        inputStdName(name);
-//        System.out.println("Enter Student Course");
-//        courseName = getString(20);
-//        newStd.setCourse(courseName);
-//        inputCourse(course);
-//        System.out.println("Enter Student programme");
-//        programmeName = getString(20);
-//        newStd.setProgramme(programmeName);
-//        inputProgramme(programme);
-//        System.out.println("Enter Student Class");
-//        stdClass = getString(20);
-//        newStd.setStudentClass(stdClass);
-//        inputStdClass(studentClass);
-//        System.out.println("Enter Student Email");
-//        eml = getString(20);
-//        newStd.setEmail(eml);
-//        inputEmail(email);
-//
-//
-//
-//        return newStd;
-//    }
 
     public Student registerStudent(CircularListInterface<Course> courseProgramList){
         Student newStudent = new Student();
@@ -490,49 +597,7 @@ public class UI {
         return newStudent;
     }
 
-//    public void inputStdName(CircularListInterface<String> student){
-//        clearScreen();
-//        System.out.println("SELECT StudentName");
-//        System.out.printf("%-4s %-10s\n", "no", "name");
-//        int i = 1;
-//        for (String item: student){
-//            System.out.printf("%-4d %-10s\n", i, item);
-//            i++;
-//        }
-//    }
-//
-//    public void inputProgramme(CircularListInterface<String> programme){
-//        clearScreen();
-//        System.out.println("SELECT PROGRAMME LIST");
-//        System.out.printf("%-4s %-10s\n", "no", "programme");
-//        int i = 1;
-//        for (String item: programme){
-//            System.out.printf("%-4d %-10s\n", i, item);
-//            i++;
-//        }
-//    }
-//
-//    public void inputStdClass(CircularListInterface<String> stuClass){
-//        clearScreen();
-//        System.out.println("SELECT STUDENTCLASS LIST");
-//        System.out.printf("%-4s %-10s\n", "no", "StudentClass");
-//        int i = 1;
-//        for (String item: stuClass){
-//            System.out.printf("%-4d %-10s\n", i, item);
-//            i++;
-//        }
-//    }
-//
-//    public void inputEmail(CircularListInterface<String> email){
-//        clearScreen();
-//        System.out.println("SELECT EMAIL LIST");
-//        System.out.printf("%-4s %-10s\n", "no", "email");
-//        int i = 1;
-//        for (String item: email){
-//            System.out.printf("%-4d %-10s\n", i, item);
-//            i++;
-//        }
-//    }
+
 
     public void registeredCoursesDisplay(CircularListInterface<Student> std) {
         clearScreen();

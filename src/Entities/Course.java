@@ -34,12 +34,11 @@ public class Course implements Comparable<Course>, DataClass {
     public String toString() {
         StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("{");
-        jsonBuilder.append("\"courseId\": \"").append(courseId).append("\", ");
-        jsonBuilder.append("\"courseName\": \"").append(courseName).append("\", ");
-        jsonBuilder.append("\"courseDetails\": \"").append(courseDetails).append("\", ");
-        jsonBuilder.append("\"programName\": \"").append(programName).append("\", ");
-        jsonBuilder.append("\"semesterName\": \"").append(semesterName).append("\", ");
-        jsonBuilder.append("\"facultyName\": \"").append(facultyName).append("\" ");
+        jsonBuilder.append("\"Course\": \"").append(courseName).append("\", ");
+        jsonBuilder.append("\"Details\": \"").append(courseDetails).append("\", ");
+        jsonBuilder.append("\"Program\": \"").append(programName).append("\", ");
+        jsonBuilder.append("\"Semester\": \"").append(semesterName).append("\", ");
+        jsonBuilder.append("\"Faculty\": \"").append(facultyName).append("\" ");
         jsonBuilder.append("}");
         return jsonBuilder.toString();
     }

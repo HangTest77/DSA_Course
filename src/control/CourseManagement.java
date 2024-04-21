@@ -99,6 +99,7 @@ public class CourseManagement {
 
             for (int i = 1; i <=numberOfInputs ; i++){
                 System.out.println("Course " + i + ": ");
+                System.out.println("Eg: RSW, RSD");
                 String courseName = ui.getMultipleCourseName();
                 Course newCourse = ui.addProgramToMultiplteCourse(courseName, programmeName);
 
@@ -106,14 +107,15 @@ public class CourseManagement {
 
                 if (selectedCourse != null) {
                     courseProgramlist.addSame(newCourse);
-
+                    System.out.println("Successfully Added.");
                 } else {
                     System.out.println("Course not found.");
                     System.out.println("Unable to add new Program.");
                     System.out.println(" ");
+                    break;
                 }
             }
-            System.out.println("Successfully Added.");
+
 
         }
 
@@ -146,6 +148,7 @@ public class CourseManagement {
 
             for (int i = 1; i <=numberOfInputs ; i++){
                 System.out.println("Program " + i + ": ");
+                System.out.println("Eg: G1, G2");
                 String programName = ui.getMultipleProgramName();
                 Course newProgram = ui.addCourseToMultiplteProgram(courseName, programName);
 
@@ -153,14 +156,15 @@ public class CourseManagement {
 
                 if (selectedProgram != null) {
                     courseProgramlist.addSame(newProgram);
+                    System.out.println("Successfully Added.");
 
                 } else {
                     System.out.println("Program not found.");
                     System.out.println("Unable to add new Course.");
                     System.out.println(" ");
+                    break;
                 }
             }
-            System.out.println("Successfully Added.");
 
         }
 
@@ -178,27 +182,32 @@ public class CourseManagement {
         if (selectedCourse != null) {
             Course newCourse = ui.removeProgramFromCourse(courseName);
             String programName = newCourse.getProgramName();
+            String semesterName = newCourse.getSemesterName();
+            String facultyName = newCourse.getFacultyName();
 
+            boolean absent = false;
             //Validate
-            Course InputtedProgram = findCourseContainsProgram(courseName, programName);
+            for (Course course : courseProgramlist) {
+                if (course.getProgramName().equals(programName) &&
+                        course.getCourseName().equals(courseName) &&
+                        course.getFacultyName().equals(facultyName) &&
+                        course.getSemesterName().equals(semesterName)) {
+                    absent = true;
+                    courseProgramlist.remove(course);
+                    System.out.println("Successfully Removed.");
+                    System.out.println(" ");
 
-            if (InputtedProgram != null){
-                if(InputtedProgram.getProgramName().equals(programName) &&
-                        InputtedProgram.getCourseName().equals(courseName)){
-                    courseProgramlist.remove(InputtedProgram);
                 }
-                System.out.println("Successfully Removed.");
+            }
 
-                System.out.println(" ");
-            } else{
-                System.out.println("This program " + programName
-                        + " is not found in the Course "
-                        + courseName);
-                System.out.println("Please try again");
+            if(!absent){
+                System.out.println("Course not found.");
+                System.out.println("Unable to remove Program.");
                 System.out.println(" ");
             }
 
-        } else {
+
+            } else {
             System.out.println("Course not found.");
             System.out.println("Unable to remove Program.");
             System.out.println(" ");
@@ -209,32 +218,40 @@ public class CourseManagement {
     public String removeCourses() {
         System.out.println("Selected Choice: Remove Course From Program");
         String programName = ui.getProgramName();
-        Course selectedProgram = findProgramByName(programName);
+        Course selectedCourse = findProgramByName(programName);
 
-        if (selectedProgram != null) {
-            Course newProgram = ui.removeCourseFromProgram(programName);
-            String courseName = newProgram.getCourseName();
+        if (selectedCourse != null) {
+            Course newCourse = ui.removeCourseFromProgram(programName);
+            String courseName = newCourse.getCourseName();
+            String semesterName = newCourse.getSemesterName();
+            String facultyName = newCourse.getFacultyName();
 
+            boolean absent = false;
             //Validate
-            Course InputtedCourse = findProgramContainsCourse(courseName, programName);
+            for (Course course : courseProgramlist) {
 
-            if (InputtedCourse != null){
-                if(InputtedCourse.getProgramName().equals(programName) &&
-                        InputtedCourse.getCourseName().equals(courseName)){
-                    courseProgramlist.remove(InputtedCourse);
+                if (course.getProgramName().equals(programName) &&
+                        course.getCourseName().equals(courseName) &&
+                        course.getFacultyName().equals(facultyName) &&
+                        course.getSemesterName().equals(semesterName)) {
+                    courseProgramlist.remove(course);
+                    absent = true;
+                    System.out.println("Successfully Removed.");
+
+                    System.out.println(" ");
+
                 }
-                System.out.println("Successfully Removed.");
+            }
 
-                System.out.println(" ");
-            } else{
-                System.out.println("This course " + courseName
-                        + " is not found in the Program "
-                        + programName);
-                System.out.println("Please try again");
+            if(!absent){
+                System.out.println("Program not found.");
+                System.out.println("Unable to remove Program.");
                 System.out.println(" ");
             }
 
+
         } else {
+
             System.out.println("Program not found.");
             System.out.println("Unable to remove Course.");
             System.out.println(" ");
@@ -287,7 +304,7 @@ public class CourseManagement {
                         System.out.println(numbering + ") " + "Program: " + program);
                         numbering++;
 
-                    } else if (previousCourses.equals(course)) {
+                    } else if ((previousCourses != null) && (previousCourses.equals(course))) {
                         System.out.println(numbering + ") " + "Program: " + program);
                         numbering++;
 
@@ -344,7 +361,17 @@ public class CourseManagement {
                         String course = extractCourse1(outputCourse);
                         String program = extractProgram1(outputCourse);
 
-                        if (previousCourses == null && course.equals(inputCourseName)) {
+                        if ((previousCourses == null) && (course.equals(inputCourseName))){
+                            System.out.println(" ");
+                            System.out.println("= = = = = = = = = = = = = = =");
+                            System.out.println("Course: " + course);
+                            System.out.println("= = = = = = = = = = = = = = =");
+                            System.out.println(numbering + ") " + "Program: " + program);
+                            numbering++;
+                        }
+                         else if (course.equals(inputCourseName) && (!previousCourses.equals(course))
+                         && (previousCourses != null)) {
+                            numbering = 1;
                             System.out.println(" ");
                             System.out.println("= = = = = = = = = = = = = = =");
                             System.out.println("Course: " + course);
@@ -352,10 +379,11 @@ public class CourseManagement {
                             System.out.println(numbering + ") " + "Program: " + program);
                             numbering++;
 
-                        } else if (previousCourses.equals(course) && course.equals(inputCourseName)) {
+                        }
+                        else if (course.equals(inputCourseName) && (previousCourses.equals(course))
+                          && (previousCourses != null)){
                             System.out.println(numbering + ") " + "Program: " + program);
                             numbering++;
-
                         }
                         previousCourses = course;
 
@@ -574,25 +602,6 @@ public class CourseManagement {
     }
 
 
-    public Course findCourseContainsProgram(String courseName, String programName) {
-        for (Course course : courseProgramlist) {
-            if ((course.getProgramName().equals(programName)) &&
-                    (course.getCourseName().equals(courseName))) {
-                return course;
-            }
-        }
-        return null;
-    }
-    public Course findProgramContainsCourse(String courseName, String programName) {
-        for (Course program : courseProgramlist) {
-            if ((program.getCourseName().equals(courseName)) &&
-                    (program.getProgramName().equals(programName))) {
-                return program;
-            }
-        }
-        return null;
-    }
-
 
     public String listCourseDetails() {
         System.out.println("List of Courses Details:");
@@ -618,6 +627,9 @@ public class CourseManagement {
 
     private String extractPrice1(String courseSemester) {
         return courseSemester.split(",")[2].split(":")[1].trim();
+    }
+    private String extractFaculty1(String courseSemester) {
+        return courseSemester.split(",")[3].split(":")[1].trim();
     }
 
     private String extractProgram2(String courseSemester) {
@@ -705,13 +717,15 @@ public class CourseManagement {
                         courseSemesterList.addSame(
                                 "Program: " + program.getProgramName()
                                 + ", Course: " + program.getCourseName() +
-                                        ", Fees: " + program.getCoursePrice());
+                                        ", Fees: " + program.getCoursePrice() +
+                                        ", Faculty: " + program.getFacultyName());
 
                     } else {
                         courseSemesterList.addSame(
                                 "Program: " + program.getProgramName()
                              + ", Course: " + program.getCourseName() +
-                                ", Fees: " + program.getCoursePrice());
+                                ", Fees: " + program.getCoursePrice() +
+                                ", Faculty: " + program.getFacultyName());
 
                     }
                 }
@@ -744,6 +758,7 @@ public class CourseManagement {
                 String courseNow = extractProgram1(courseSemester);
                 String programNow = extractCourse1(courseSemester);
                 String priceNow = extractPrice1(courseSemester);
+                String facultyNow = extractFaculty1(courseSemester);
 
                 if (previousCourse == null) {
                     System.out.println(" ");
@@ -754,14 +769,14 @@ public class CourseManagement {
                     System.out.println("= = = = = = = = = = = = = = =");
 
                     System.out.println(numbering + ") " + "Course: " + courseNow
-                    + ", Price: " + priceNow);
+                    + ", Price: " + priceNow + ", Faculty: " + facultyNow);
                     numbering++;
                     course1++;
 
                 }
                 else if(programNow.contains(previousCourse)){
                     System.out.println(numbering + ") " + "Course: " + courseNow
-                            + ", Price: " + priceNow);
+                            + ", Price: " + priceNow + ", Faculty: " + facultyNow);
                     numbering++;
                     course1++;
 
@@ -775,7 +790,7 @@ public class CourseManagement {
                     System.out.println("||                          ||");
                     System.out.println("= = = = = = = = = = = = = = =");
                     System.out.println(numbering + ") " + "Course: " + courseNow
-                            + ", Price: " + priceNow);
+                            + ", Price: " + priceNow + ", Faculty: " + facultyNow);
                     course1++;
 
                 }
