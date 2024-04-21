@@ -281,7 +281,8 @@ public class CourseManagement {
                     //Add to courseSemesterList
                     courseSemesterList.addSame(
                             "Course: " + course.getCourseName() +
-                                    ", Program: " + course.getProgramName());
+                                    ", Program: " + course.getProgramName() +
+                                    ", Faculty: " + course.getFacultyName());
 
 
                 }
@@ -294,6 +295,7 @@ public class CourseManagement {
             for (String facultyName : courseSemesterList) {
                 String course = extractCourse1(facultyName);
                 String program = extractProgram1(facultyName);
+                String faculty = extractFaculty2(facultyName);
 
 
                     if (previousCourses == null) {
@@ -301,11 +303,13 @@ public class CourseManagement {
                         System.out.println("= = = = = = = = = = = = = = =");
                         System.out.println("Course: " + course);
                         System.out.println("= = = = = = = = = = = = = = =");
-                        System.out.println(numbering + ") " + "Program: " + program);
+                        System.out.println(numbering + ") " + "Program: " + program
+                        + ", Faculty: " + faculty);
                         numbering++;
 
                     } else if ((previousCourses != null) && (previousCourses.equals(course))) {
-                        System.out.println(numbering + ") " + "Program: " + program);
+                        System.out.println(numbering + ") " + "Program: " + program
+                                + ", Faculty: " + faculty);
                         numbering++;
 
 
@@ -315,7 +319,8 @@ public class CourseManagement {
                         System.out.println("= = = = = = = = = = = = = = =");
                         System.out.println("Course: " + course);
                         System.out.println("= = = = = = = = = = = = = = =");
-                        System.out.println(numbering + ") " + "Program: " + program);
+                        System.out.println(numbering + ") " + "Program: " + program
+                                + ", Faculty: " + faculty);
                         numbering++;
 
                     }
@@ -360,13 +365,15 @@ public class CourseManagement {
                     for (String outputCourse : courseSemesterList){
                         String course = extractCourse1(outputCourse);
                         String program = extractProgram1(outputCourse);
+                        String faculty = extractFaculty2(outputCourse);
 
                         if ((previousCourses == null) && (course.equals(inputCourseName))){
                             System.out.println(" ");
                             System.out.println("= = = = = = = = = = = = = = =");
                             System.out.println("Course: " + course);
                             System.out.println("= = = = = = = = = = = = = = =");
-                            System.out.println(numbering + ") " + "Program: " + program);
+                            System.out.println(numbering + ") " + "Program: " + program
+                                    + ", Faculty: " + faculty);
                             numbering++;
                         }
                          else if (course.equals(inputCourseName) && (!previousCourses.equals(course))
@@ -376,13 +383,15 @@ public class CourseManagement {
                             System.out.println("= = = = = = = = = = = = = = =");
                             System.out.println("Course: " + course);
                             System.out.println("= = = = = = = = = = = = = = =");
-                            System.out.println(numbering + ") " + "Program: " + program);
+                            System.out.println(numbering + ") " + "Program: " + program
+                                    + ", Faculty: " + faculty);
                             numbering++;
 
                         }
                         else if (course.equals(inputCourseName) && (previousCourses.equals(course))
                           && (previousCourses != null)){
-                            System.out.println(numbering + ") " + "Program: " + program);
+                            System.out.println(numbering + ") " + "Program: " + program
+                                    + ", Faculty: " + faculty);
                             numbering++;
                         }
                         previousCourses = course;
@@ -421,10 +430,12 @@ public class CourseManagement {
                 String programNames = faculty.getProgramName();
                 String courseNames = faculty.getCourseName();
                 String courseDetails = faculty.getCourseDetails();
+                String facultys = faculty.getFacultyName();
 
                 if (programName.equals(programNames)){
                     courseDetailList.addSame(programNames + " - "
-                            + courseNames + " - " + courseDetails);
+                            + courseNames + " - " + courseDetails + " - "
+                    + facultys);
 
                 }
             }
@@ -445,10 +456,12 @@ public class CourseManagement {
 
                 //Update all details related to this course
             for (Course course : courseProgramlist) {
+                String faculties = course.getFacultyName();
+
                 if (course.getCourseName().equals(courseName) &&
                         course.getProgramName().equals(programName) ) {
                     System.out.println("-------------------------------");
-                    System.out.println("Enter New Course Detail:");
+                    System.out.println("Enter New Course Detail (" + faculties + ") : ");
 
                     String newCourseDetails = ui.getCourseDetail();
 
@@ -552,9 +565,10 @@ public class CourseManagement {
 
                 String currentProgramName = program.getProgramName();
                 String courseNames = program.getCourseName();
+                String facultyNames = program.getFacultyName();
 
                 if (currentProgramName.equals(programName)) {
-                    allCourseList.addSame(courseNames);
+                    allCourseList.addSame("Course: " + courseNames + " -  Faculty: " + facultyNames);
                 }
             }
 
@@ -625,9 +639,14 @@ public class CourseManagement {
         return courseSemester.split(",")[1].split(":")[1].trim();
     }
 
+    private String extractFaculty2(String courseSemester) {
+        return courseSemester.split(",")[2].split(":")[1].trim();
+    }
+
     private String extractPrice1(String courseSemester) {
         return courseSemester.split(",")[2].split(":")[1].trim();
     }
+
     private String extractFaculty1(String courseSemester) {
         return courseSemester.split(",")[3].split(":")[1].trim();
     }
@@ -639,6 +658,7 @@ public class CourseManagement {
     private String extractPrice2(String courseSemester) {
         return courseSemester.split(",")[3].split(":")[1].trim();
     }
+
     private String extractCourse2(String courseSemester) {
         return courseSemester.split(",")[2].split(":")[1].trim();
     }
@@ -681,21 +701,6 @@ public class CourseManagement {
         return null;
     }
 
-    private String extractFacultyReport2(String feeEntry) {
-        return feeEntry.split(",")[0].split(":")[1].trim();
-    }
-
-    private String extractTotalPriceReport2(String feeEntry) {
-        return feeEntry.split(",")[1].split(":")[1].trim();
-    }
-
-    private String extractNumberOfProgramsReport2(String feeEntry) {
-        return feeEntry.split(",")[2].split(":")[1].trim();
-    }
-
-    private String extractNumberOfCoursesReport2(String feeEntry) {
-        return feeEntry.split(",")[3].split(":")[1].trim();
-    }
 
 
 //    Report1
