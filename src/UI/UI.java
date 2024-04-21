@@ -176,7 +176,6 @@ public class UI {
      * @return an int of the choice selected by user
      */
     public int getChoice(int max) {
-        int maxinput = max;
         int choice = 20202;
         do {
             System.out.println("Enter your choice: ");
@@ -188,7 +187,7 @@ public class UI {
                 choice = scanner.nextInt();
                 scanner.nextLine();
             }
-        } while (choice < 0 || choice > maxinput);
+        } while (choice < 0 || choice > max);
 
         return choice;
     }
@@ -380,7 +379,8 @@ public class UI {
         System.out.println("2. List Students");
         System.out.println("3. Remove Students");
         System.out.println("4. Edit Students Details");
-        System.out.println("5. Display registered courses");
+        System.out.println("5. Course Fees Calculation");
+        System.out.println("6. Filter Students by Course");
         System.out.println("0. Return to menu");
         System.out.println("-------------------------------");
 

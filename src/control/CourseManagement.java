@@ -10,9 +10,11 @@ public class CourseManagement {
     Initializer init = new Initializer();
     CircularListInterface<Course> courseProgramlist = init.courseProgramListInit();
     CircularListInterface<String> facultyList = init.facultyListInit();
+    CircularListInterface<String> facultyListSort = init.facultyListInit2();
     CircularListInterface<String> allCourseList = init.allCourseOfOneProgramListInit();
     CircularListInterface<String> courseSemesterList = init.courseSemesterListInit();
     CircularListInterface<String> courseDetailList = init.courseDetailListInit();
+    CircularListInterface<String> feesLists = init.feesListInit();
     UI ui = new UI();
 
     public CourseManagement(CircularListInterface<Course> CP){
@@ -59,7 +61,6 @@ public class CourseManagement {
                 case 10:
                     errorMsg = report1();
                     break;
-
                 case 11:
                     errorMsg = report2();
                     break;
@@ -247,32 +248,69 @@ public class CourseManagement {
         System.out.println("Selected Choice: Search Course Offered In Semester");
         String semesterName = ui.getSemesterName();
 
+        boolean foundCourses = false;
+
         Course selectedSemester = findSemesterByName(semesterName);
         if (courseProgramlist.contains(selectedSemester)) {
             System.out.println("These are the Courses in " + semesterName);
 
-            boolean foundCourses = false;
+
+            int numbering = 1;
+            String previousCourses = null;
 
             for (Course course : courseProgramlist) {
                 if (course.getSemesterName().equals(semesterName)) {
                     foundCourses = true;
                     //Add to courseSemesterList
-                    courseSemesterList.addSame(course.getCourseName());
+                    courseSemesterList.addSame(
+                            "Course: " + course.getCourseName() +
+                                    ", Program: " + course.getProgramName());
+
 
                 }
             }
 
-            //Output the course in courseSemesterList
+            //List out all Courses
             System.out.println(" ");
             System.out.println("The list consists of: ");
             courseSemesterList.sort();
-            for(String facultyName : courseSemesterList) {
-                System.out.println(facultyName);
-
-            }
-            courseSemesterList.clear();
+            for (String facultyName : courseSemesterList) {
+                String course = extractCourse1(facultyName);
+                String program = extractProgram1(facultyName);
 
 
+                    if (previousCourses == null) {
+                        System.out.println(" ");
+                        System.out.println("= = = = = = = = = = = = = = =");
+                        System.out.println("Course: " + course);
+                        System.out.println("= = = = = = = = = = = = = = =");
+                        System.out.println(numbering + ") " + "Program: " + program);
+                        numbering++;
+
+                    } else if (previousCourses.equals(course)) {
+                        System.out.println(numbering + ") " + "Program: " + program);
+                        numbering++;
+
+
+                    } else {
+                        numbering = 1;
+                        System.out.println(" ");
+                        System.out.println("= = = = = = = = = = = = = = =");
+                        System.out.println("Course: " + course);
+                        System.out.println("= = = = = = = = = = = = = = =");
+                        System.out.println(numbering + ") " + "Program: " + program);
+                        numbering++;
+
+                    }
+
+                    previousCourses = course;
+
+                }
+                System.out.println(" ");
+                System.out.println("= = = = = = = = = = = = = = =");
+
+
+            //Search Functionalities
             if (!foundCourses) {
                 System.out.println(" ");
                 System.out.println("No courses found in " + semesterName);
@@ -296,11 +334,42 @@ public class CourseManagement {
                 if (courseFound) {
                     System.out.println("Yes, the " + inputCourseName +
                             " is found in " + semesterName);
+
+                    //Design the output
+                    courseSemesterList.sort();
+                    previousCourses = null;
+                    numbering = 1;
+
+                    for (String outputCourse : courseSemesterList){
+                        String course = extractCourse1(outputCourse);
+                        String program = extractProgram1(outputCourse);
+
+                        if (previousCourses == null && course.equals(inputCourseName)) {
+                            System.out.println(" ");
+                            System.out.println("= = = = = = = = = = = = = = =");
+                            System.out.println("Course: " + course);
+                            System.out.println("= = = = = = = = = = = = = = =");
+                            System.out.println(numbering + ") " + "Program: " + program);
+                            numbering++;
+
+                        } else if (previousCourses.equals(course) && course.equals(inputCourseName)) {
+                            System.out.println(numbering + ") " + "Program: " + program);
+                            numbering++;
+
+                        }
+                        previousCourses = course;
+
+                    }
+                    System.out.println("= = = = = = = = = = = = = = =");
+                    System.out.println(" ");
+
+                    courseSemesterList.clear();
+
                 } else {
                     System.out.println("No, this course is not offered in " + semesterName);
                     System.out.println(" ");
-                }
-            }
+                    courseSemesterList.clear();
+                }}
 
         } else {
             System.out.println("Semester not found.");
@@ -377,29 +446,67 @@ public class CourseManagement {
     //List courses taken by different faculties
     public String listCourseByFaculty() {
         facultyList.clear();
-
         System.out.println("Selected Choice: List Course Taken By Different Faculties");
 
         for (Course faculty : courseProgramlist) {
             String currentFacultyName = faculty.getFacultyName();
             String courseNames = faculty.getCourseName();
-
-            facultyList.addSame(currentFacultyName + " - " + courseNames);
+            facultyList.add(
+                    "Faculty: " + currentFacultyName + ", Course: " + courseNames);
 
         }
-
 
         System.out.println(" ");
-        System.out.println("The faculty list is: ");
-        System.out.println("New");
+        System.out.println("The faculty list consists of: ");
         facultyList.sort();
+
+        int numbering = 1;
+        String previousFaculty = null;
+
+
         for(String facultyName : facultyList) {
-            System.out.println(facultyName);
+            facultyListSort.addSame(facultyName);
+            String faculty = extractFaculty(facultyName);
+            String course = extractCourse(facultyName);
+
+            //print out first faculty
+            if (previousFaculty == null){
+                System.out.println(" ");
+                System.out.println("= = = = = = = = = = = = = = =");
+                System.out.println("Faculty: " + faculty);
+                System.out.println("= = = = = = = = = = = = = = =");
+                System.out.println(numbering + ") " + course);
+                numbering++;
+
+            }
+            else if (previousFaculty.equals(faculty)) {
+                System.out.println(numbering + ") " + course);
+                numbering++;
+
+
+            }else {
+                numbering = 1;
+                System.out.println(" ");
+                System.out.println("= = = = = = = = = = = = = = =");
+                System.out.println("Faculty: " + faculty);
+                System.out.println("= = = = = = = = = = = = = = =");
+                System.out.println(numbering + ") " + course);
+                numbering++;
+
+
+
+            }
+
+            previousFaculty = faculty;
 
         }
+        System.out.println(" ");
+        System.out.println("= = = = = = = = = = = = = = =");
+
 
         return " ";
     }
+
 
 
     //List all courses for a programme
@@ -501,6 +608,52 @@ public class CourseManagement {
         return courseSemester.split(",")[0].split(":")[1].trim();
     }
 
+    private String extractCourse1(String courseSemester) {
+        return courseSemester.split(",")[0].split(":")[1].trim();
+    }
+
+    private String extractProgram1(String courseSemester) {
+        return courseSemester.split(",")[1].split(":")[1].trim();
+    }
+
+    private String extractPrice1(String courseSemester) {
+        return courseSemester.split(",")[2].split(":")[1].trim();
+    }
+
+    private String extractProgram2(String courseSemester) {
+        return courseSemester.split(",")[1].split(":")[1].trim();
+    }
+
+    private String extractPrice2(String courseSemester) {
+        return courseSemester.split(",")[3].split(":")[1].trim();
+    }
+    private String extractCourse2(String courseSemester) {
+        return courseSemester.split(",")[2].split(":")[1].trim();
+    }
+
+    private static String extractFaculty(String facultyCourse) {
+        String prefix = "Faculty: ";
+        int startIndex = facultyCourse.indexOf(prefix);
+        if (startIndex != -1) {
+            int endIndex = facultyCourse.indexOf(',', startIndex + prefix.length());
+            if (endIndex == -1) { // If comma not found, take the substring till the end
+                return facultyCourse.substring(startIndex + prefix.length()).trim();
+            } else {
+                return facultyCourse.substring(startIndex + prefix.length(), endIndex).trim();
+            }
+        }
+        return "";
+    }
+
+    private static String extractCourse(String courseFaculty) {
+        String prefix = "Course: ";
+        int startIndex = courseFaculty.indexOf(prefix);
+        if (startIndex != -1) {
+            return courseFaculty.substring(startIndex + prefix.length()).trim();
+        }
+        return "";
+    }
+
     private String extractPriceName(String courseSemester) {
         String[] sections = courseSemester.split(",");
 
@@ -516,12 +669,28 @@ public class CourseManagement {
         return null;
     }
 
+    private String extractFacultyReport2(String feeEntry) {
+        return feeEntry.split(",")[0].split(":")[1].trim();
+    }
+
+    private String extractTotalPriceReport2(String feeEntry) {
+        return feeEntry.split(",")[1].split(":")[1].trim();
+    }
+
+    private String extractNumberOfProgramsReport2(String feeEntry) {
+        return feeEntry.split(",")[2].split(":")[1].trim();
+    }
+
+    private String extractNumberOfCoursesReport2(String feeEntry) {
+        return feeEntry.split(",")[3].split(":")[1].trim();
+    }
+
 
 //    Report1
 //    Semester Offer what Program which Offers what Course + Price (Total)
     public String report1(){
         //Select Semester
-        System.out.println("Selected Choice: Report1");
+        System.out.println("Selected Choice: Course Management - Report1");
         String semesterName = ui.getSemesterName();
 
         Course selectedSemester = findSemesterByName(semesterName);
@@ -549,36 +718,73 @@ public class CourseManagement {
             }
 
 
-            String previousCourse = null;
 
             courseSemesterList.sort();
             System.out.println(" ");
 
-
             int course1 = 0;
             int totalPrograms1 = 1;
+            String previousCourse = null;
+            int numbering = 1;
 
-
-
+            courseSemesterList.sort();
             //Output List
-            for (String courseSemester: courseSemesterList){
-                String currentProgramName = extractProgramName(courseSemester);
 
-                if (previousCourse == null || currentProgramName.contains(previousCourse)) {
-                    System.out.println(courseSemester);
+            String format = "|| %1$-24s ||";
+            System.out.println(" ");
+            System.out.println("= = = = = = = = = = = = = = =");
+            System.out.println("||**************************||");
+            System.out.println("||                          ||");
+            System.out.println("||         Report 1         ||");
+            System.out.println("||                          ||");
+            System.out.println("||**************************||");
+            System.out.println("= = = = = = = = = = = = = = =");
+
+            for (String courseSemester: courseSemesterList){
+                String courseNow = extractProgram1(courseSemester);
+                String programNow = extractCourse1(courseSemester);
+                String priceNow = extractPrice1(courseSemester);
+
+                if (previousCourse == null) {
+                    System.out.println(" ");
+                    System.out.println("= = = = = = = = = = = = = = =");
+                    System.out.println("||                          ||");
+                    System.out.printf(format + "%n", "   Program: " + programNow );
+                    System.out.println("||                          ||");
+                    System.out.println("= = = = = = = = = = = = = = =");
+
+                    System.out.println(numbering + ") " + "Course: " + courseNow
+                    + ", Price: " + priceNow);
+                    numbering++;
+                    course1++;
+
+                }
+                else if(programNow.contains(previousCourse)){
+                    System.out.println(numbering + ") " + "Course: " + courseNow
+                            + ", Price: " + priceNow);
+                    numbering++;
                     course1++;
 
 
                 }else {
-                    System.out.println("------------------------------------------------");
-                    System.out.println(courseSemester);
-                    totalPrograms1++;
+                    numbering = 1;
+                    System.out.println(" ");
+                    System.out.println("= = = = = = = = = = = = = = =");
+                    System.out.println("||                          ||");
+                    System.out.printf(format + "%n", "   Program: " + programNow );
+                    System.out.println("||                          ||");
+                    System.out.println("= = = = = = = = = = = = = = =");
+                    System.out.println(numbering + ") " + "Course: " + courseNow
+                            + ", Price: " + priceNow);
+                    course1++;
 
                 }
 
-                previousCourse = currentProgramName;
+                previousCourse = programNow;
             }
             System.out.println(" ");
+            System.out.println("= = = = = = = = = = = = = = =");
+
 
 
             //Output Specifics
@@ -587,6 +793,9 @@ public class CourseManagement {
             int course = 0;
             int price = 0;
             int totalPrograms = 1;
+
+            int grandCourses = 0;
+            int grandFees = 0;
 
 
             System.out.println(" ");
@@ -603,14 +812,17 @@ public class CourseManagement {
                     int priceInt = Integer.parseInt(currentPrice2);
                     PName = currentProgramName2;
                     price += priceInt;
+                    grandCourses++;
+                    grandFees += priceInt;
 
 
 
                 }else {
-                    System.out.println(" = = = = = = = = = = = = = = =");
-                    System.out.println(totalPrograms + ") Program " + PName
-                            + " - Total Courses: " + course
-                            + " - Total Fees: " + price);
+                    System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                    String programDetails = String.format(" || %d) Program %-8s - Total Courses: %-2d - Total Fees: RM %-4d.00  ||",
+                            totalPrograms, PName, course, price);
+                    System.out.println(programDetails);
+
 
                     previousCourse2 = null;
                     PName = currentProgramName2;
@@ -623,6 +835,8 @@ public class CourseManagement {
                     int priceInt = Integer.parseInt(currentPrice2);
                     PName = currentProgramName2;
                     price += priceInt;
+                    grandCourses++;
+                    grandFees += priceInt;
 
 
                 }
@@ -630,11 +844,50 @@ public class CourseManagement {
                 previousCourse2 = currentProgramName2;
             }
 
-            System.out.println(" = = = = = = = = = = = = = = =");
-            System.out.println(totalPrograms + ") Program " + PName
-                        + " - Total Courses: " + course
-                        + " - Total Fees: " + price);
-            System.out.println(" = = = = = = = = = = = = = = =");
+            System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            String programDetails = String.format(" || %d) Program %-8s - Total Courses: %-2d - Total Fees: RM %-4d.00  ||",
+                    totalPrograms, PName, course, price);
+            System.out.println(programDetails);
+
+            if ((totalPrograms < 10) && (grandCourses <10) ){
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-62s %d  ||%n", "Grand Program(s):", totalPrograms);
+                System.out.printf(" || %-62s %d  ||%n", "Grand Course(s):", grandCourses);
+                System.out.printf(" || %-54s RM %d.00 ||%n", "Grand Fees:", grandFees);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            }
+            else if ((totalPrograms < 10) && (grandCourses >=10) ){
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-62s %d  ||%n", "Grand Program(s):", totalPrograms);
+                System.out.printf(" || %-61s %d  ||%n", "Grand Course(s):", grandCourses);
+                System.out.printf(" || %-54s RM %d.00 ||%n", "Grand Fees:", grandFees);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            }
+            else if ((totalPrograms >= 10) && (grandCourses < 10) ){
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-61s %d  ||%n", "Grand Program(s):", totalPrograms);
+                System.out.printf(" || %-62s %d  ||%n", "Grand Course(s):", grandCourses);
+                System.out.printf(" || %-54s RM %d.00 ||%n", "Grand Fees:", grandFees);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            }
+
+            else {
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-61s %d  ||%n", "Grand Program(s):", totalPrograms);
+                System.out.printf(" || %-61s %d  ||%n", "Grand Course(s):", grandCourses);
+                System.out.printf(" || %-54s RM %d.00 ||%n", "Grand Fees:", grandFees);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            }
+
+
 
 
             courseSemesterList.clear();
@@ -649,7 +902,249 @@ public class CourseManagement {
 
     //Report 2 Faculty
     public String report2(){
+        System.out.println("Selected Choice: Course Management - Report2");
+        facultyList.clear();
 
+        for (Course faculty : courseProgramlist) {
+            String currentFacultyName = faculty.getFacultyName();
+            String courseNames = faculty.getCourseName();
+            String programNames = faculty.getProgramName();
+            int priceInt = faculty.getCoursePrice();
+
+            facultyList.add(
+                    "Faculty: " + currentFacultyName + ", Program: " + programNames +
+                    ", Course: " + courseNames + ", Price: " + priceInt
+            );
+
+        }
+
+        System.out.println(" ");
+        System.out.println("The faculty list consists of: ");
+        facultyList.sort();
+
+        int numbering = 1;
+        int grandCoursess = 0;
+        int grandFaculty = 0;
+        int grandProgrammes = 0;
+        int pricePerFaculty = 0;
+        int grandPrice = 0;
+
+        int numberOfCoursess = 0;
+        int numberOfPrograms = 0;
+        int numberOfFaculties = 0;
+
+        int totalCourses = 0;
+        int totalProgram= 0;
+
+        String previousFaculty = null;
+        String previousProgram = null;
+
+
+        System.out.println(" ");
+        System.out.println("= = = = = = = = = = = = = = =");
+        System.out.println("||**************************||");
+        System.out.println("||                          ||");
+        System.out.println("||         Report 2         ||");
+        System.out.println("||                          ||");
+        System.out.println("||**************************||");
+        System.out.println("= = = = = = = = = = = = = = =");
+
+
+        for(String facultyName : facultyList) {
+            facultyListSort.addSame(facultyName);
+            String faculty = extractFaculty(facultyName);
+            String course = extractCourse2(facultyName);
+            String program = extractProgram2(facultyName);
+            String price = extractPrice2(facultyName);
+
+
+
+            String format = "|| %1$-29s ||";
+            //print out first faculty
+            if (previousFaculty == null){
+                System.out.println(" ");
+                System.out.println(" ");
+                System.out.println("***********************************");
+                System.out.println("|| = = = = = = = = = = = = = = = ||");
+                System.out.println("||                               ||");
+                System.out.printf(format + "%n", "      Faculty: " + faculty);
+                System.out.println("||                               ||");
+                System.out.println("|| = = = = = = = = = = = = = = = ||");
+                System.out.println("***********************************");
+                System.out.println("Program: " + program);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~ ");
+                System.out.println(numbering + ") " + "Course: " + course
+                        + ", Fees: RM " + price +".00 ");
+
+                numbering++;
+                numberOfFaculties++;
+                numberOfPrograms++;
+                numberOfCoursess++;
+
+                int priceInt = Integer.parseInt(price);
+                pricePerFaculty += priceInt;
+
+                grandFaculty += numberOfFaculties;
+                grandCoursess += numberOfCoursess;
+                grandProgrammes += numberOfPrograms;
+
+
+            }
+            else if ((previousFaculty.equals(faculty)) && (previousProgram.equals(program))) {
+                System.out.println(numbering + ") " + "Course: " + course
+                        + ", Fees: RM " + price +".00 ");
+                numberOfCoursess = 0;
+                numberOfPrograms = 0;
+
+                numbering++;
+                numberOfCoursess++;
+                int priceInt = Integer.parseInt(price);
+                pricePerFaculty += priceInt;
+
+                grandCoursess += numberOfCoursess;
+
+            }
+
+            else if ((previousFaculty.equals(faculty)) && (!previousProgram.equals(program))) {
+                numbering = 1;
+                numberOfCoursess = 0;
+                numberOfPrograms = 0;
+
+
+                System.out.println();
+                System.out.println(" ");
+                System.out.println("Program: " + program);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~ ");
+                System.out.println(numbering + ") " + "Course: " + course
+                            + ", Fees: RM " + price +".00 ");
+                numbering++;
+                int priceInt = Integer.parseInt(price);
+                pricePerFaculty += priceInt;
+
+                numberOfCoursess++;
+                numberOfPrograms++;
+
+                grandCoursess += numberOfCoursess;
+                grandProgrammes += numberOfPrograms;
+
+
+            }else {
+                System.out.println(" ");
+                System.out.println("####################################");
+                System.out.println("====================================");
+                System.out.println("Faculty: " + previousFaculty +
+                        "\nTotal Program(s): " + grandProgrammes +
+                        "\nTotal Course(s): " + grandCoursess +
+                        "\nTotal Fee(s): RM " + pricePerFaculty + ".00");
+                System.out.println("====================================");
+                System.out.println("####################################");
+
+                totalCourses += grandCoursess;
+                totalProgram += grandProgrammes;
+                grandPrice += pricePerFaculty;
+
+
+                grandCoursess = 0;
+                grandProgrammes = 0;
+                grandFaculty = 0;
+
+                numberOfCoursess = 0;
+                numberOfPrograms = 0;
+                pricePerFaculty = 0;
+                numbering = 1;
+                System.out.println(" ");
+                System.out.println(" ");
+                System.out.println("***********************************");
+                System.out.println("|| = = = = = = = = = = = = = = = ||");
+                System.out.println("||                               ||");
+                System.out.printf(format + "%n", "      Faculty: " + faculty);
+                System.out.println("||                               ||");
+                System.out.println("|| = = = = = = = = = = = = = = = ||");
+                System.out.println("***********************************");
+                System.out.println("Program: " + program);
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~ ");
+                System.out.println(numbering + ") " + "Course: " + course
+                        + ", Fees: RM " + price +".00 ");
+
+                numbering++;
+                numberOfCoursess++;
+                numberOfPrograms++;
+                numberOfFaculties++;
+
+
+                int priceInt = Integer.parseInt(price);
+                pricePerFaculty += priceInt;
+
+                grandFaculty += numberOfFaculties;
+                grandCoursess += numberOfCoursess;
+                grandProgrammes += numberOfPrograms;
+
+
+
+            }
+
+
+            previousFaculty = faculty;
+            previousProgram = program;
+
+        }
+        grandPrice += pricePerFaculty;
+        totalCourses += grandCoursess;
+        totalProgram += grandProgrammes;
+
+        System.out.println(" ");
+        System.out.println("####################################");
+        System.out.println("====================================");
+        System.out.println("Faculty: " + previousFaculty +
+                "\nTotal Program(s): " + grandProgrammes +
+                "\nTotal Course(s): " + grandCoursess +
+                "\nTotal Fee(s): RM " + pricePerFaculty + ".00");
+        System.out.println("====================================");
+        System.out.println("####################################");
+        System.out.println(" ");
+
+            //Now Summarise Table
+            if ((totalProgram < 10) && (totalCourses < 10)) {
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-62s %d  ||%n", "Grand Number of Faculty(s):", grandFaculty);
+                System.out.printf(" || %-62s %d  ||%n", "Grand Numberr of Program(s):", totalProgram);
+                System.out.printf(" || %-62s %d  ||%n", "Grand Number of Course(s):", totalCourses);
+                System.out.printf(" || %-53s RM %d.00 ||%n", "Total Fees:", grandPrice);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            } else if ((totalProgram < 10) && (totalCourses >= 10)) {
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-62s %d  ||%n", "Grand Number of Faculty(s):", grandFaculty);
+                System.out.printf(" || %-62s %d  ||%n", "Grand Number of Program(s):", totalProgram);
+                System.out.printf(" || %-61s %d  ||%n", "Grand Number of Course(s):", totalCourses);
+                System.out.printf(" || %-53s RM %d.00 ||%n", "Total Fees:", grandPrice);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            } else if ((totalProgram >= 10) && (totalCourses < 10)) {
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-62s %d  ||%n", "Grand Number of Faculty(s):", grandFaculty);
+                System.out.printf(" || %-61s %d  ||%n", "Grand Number of Program(s):", totalProgram);
+                System.out.printf(" || %-62s %d  ||%n", "Grand Number of Course(s):", totalCourses);
+                System.out.printf(" || %-53s RM %d.00 ||%n", "Total Fees:", grandPrice);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            } else {
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+                System.out.println(" || ***************************************************************** ||");
+                System.out.printf(" || %-62s %d  ||%n", "Grand Number of Faculty(s):", grandFaculty);
+                System.out.printf(" || %-61s %d  ||%n", "Grand Number of Program(s):", totalProgram);
+                System.out.printf(" || %-61s %d  ||%n", "Grand Number of Course(s):", totalCourses);
+                System.out.printf(" || %-53s RM %d.00 ||%n", "Total Fees:", grandPrice);
+                System.out.println(" || ***************************************************************** ||");
+                System.out.println(" || = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ||");
+            }
+
+
+        facultyList.clear();
+        feesLists.clear();
         return " ";
     }
 
